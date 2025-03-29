@@ -1,6 +1,9 @@
+!pip install langchain
+!pip install huggingface_hub
+
 import streamlit as st
 import requests
-from langchain.llms import HuggingFaceHub
+from langchain_community.llms import HuggingFaceHub
 from langchain.chains import RetrievalQA
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
