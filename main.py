@@ -1,6 +1,3 @@
-!pip install langchain
-!pip install huggingface_hub
-
 import streamlit as st
 import requests
 from langchain_community.llms import HuggingFaceHub
@@ -8,7 +5,6 @@ from langchain.chains import RetrievalQA
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.document_loaders import TextLoader
 
 # Load the model from Hugging Face Hub (Using a free model like OpenAssistant)
 hf_llm = HuggingFaceHub(repo_id="OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5", model_kwargs={"temperature": 0.6})
@@ -20,16 +16,15 @@ st.sidebar.write("Handles ride cancellations, refunds, and delays.")
 
 # Load and preprocess sample FAQs
 def load_faq():
-    data = """
-    Q: How do I cancel my ride?\nA: You can cancel your ride from the app before the driver arrives.
-    Q: How do I get a refund?\nA: Refunds are processed within 3-5 business days based on the payment method.
-    Q: What happens if my ride is delayed?\nA: If your ride is delayed beyond 15 minutes, you can cancel for free.
-    """
-    return data
+    return [
+        ("How do I cancel my ride?", "You can cancel your ride from the app before the driver arrives."),
+        ("How do I get a refund?", "Refunds are processed within 3-5 business days based on the payment method."),
+        ("What happens if my ride is delayed?", "If your ride is delayed beyond 15 minutes, you can cancel for free."),
+    ]
 
 # Create vector store for retrieval
 text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=10)
-documents = text_splitter.split_text(load_faq())
+documents = [q + " " + a for q, a in load_faq()]
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 vector_store = FAISS.from_texts(documents, embeddings)
 retriever = vector_store.as_retriever()
