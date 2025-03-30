@@ -1,0 +1,33 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore virtual environment
+venv/
+.env
+
+# Ignore API keys and secrets
+streamlit.secrets.toml
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Jupyter Notebook checkpoints (if using notebooks)
+.ipynb_checkpoints/
+
+# Ignore logs and temp files
+logs/
+*.log
+tmp/
+
+# Ignore IDE settings
+.vscode/
+.idea/
+*.iml
+
+# Ignore unnecessary dependency files
+pip-log.txt
+pip-delete-this-directory.txt
