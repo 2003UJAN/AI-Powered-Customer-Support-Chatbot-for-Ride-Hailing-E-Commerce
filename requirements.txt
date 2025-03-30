@@ -1,7 +1,0 @@
-streamlit
-langchain
-langchain-community
-huggingface_hub
-transformers
-requests
-python-dotenv
